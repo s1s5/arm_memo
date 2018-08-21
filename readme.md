@@ -11,19 +11,62 @@ int8x16_t, int16x8_t, int32x4_t, int64x2_t, uint8x16_t, uint16x8_t, uint32x4_t, 
 
 ## functions
 ### 四則演算
-`v<前オプション><演算名><後オプション>_<データタイプ>`が基本的な関数
-- 演算は`add`, `sub`, `mul`
+`v<前オプション><演算名><後オプション>_<データタイプ>`が基本的な関数。
+
+`v<前オプション><演算名><後オプション>_n_<データタイプ>`は引数にスカラ値がある場合使われる
+
+`v<前オプション><演算名><後オプション>_lane_<データタイプ>`が引数に要素インデクスが指定できる場合に使われる
+
+
+- 演算は
+  - `add` : 
+  - `sub` : 
+  - `mul` : 
+  - `mla` : 
+  - `mls` : 
+  - `fma` : 
+  - `fms` : 
+  - `c**`, `ca**` : `eq`, `ge`, `le`, `gt`, `lt`. `ca`の場合は絶対値比較
+  - `tst` : 
+  - `abd` : 
+  - `aba` : 
+  - `min` / `max` : 
+  - `shl` / `shr` : 
+  - `sli` / `sri` : 
+  - `cvt` : 
+  - `rnd` : 
+  - `mov` : 
+  - `abs` : 
+  - `neg` : 
+  - `cls` / `clz` / `cnt` : 
+  - `recpe` / `recps` / `rsqrte` / `rsqrts` : 
+  - `sqrt` : 
+  - `mvn` : Bitwise not
+  - `and`, `orr`, `eor` : 
+  - `bic` : bit clear
+  - `vl*` / `st*` : 
+  - `rev` : 
+  - `zip` / `uzp` : 
+  - `trn` : 
+  - `tbl` / `tbx` : 
+  - `get` / `set` : 
+  - `reinterpret` : 
+  - `dot` : 
 - 前オプションは
   - `h` : 演算結果を２で割るまで一気にやる
   - `rh` : 演算結果を２で割り、結果をroundするまで一気にやる
   - `q` : 演算結果をデータタイプで丸める
   - `r` : 結果を丸める
+  - `d` : doubling
+  - `p` : pairwise
 - 後オプションは
   - `l` : 演算結果のbit数が増えるパターン
   - `w` : bit数が多いものとの演算
   - `hn` : 上位ビットのみ演算対象にする？
   - `x` : extended??
-
+  - `u` : signed -> unsigned
+  - `n` : 演算結果のbit数が減るパターン
+  - `v` : across vector
 
 - [ ] int8x8_t vadd_s8(int8x8_t a, int8x8_t b)
 - [ ] int16x8_t vaddl_s8(int8x8_t a, int8x8_t b), int16x8_t vaddl_high_s8(int8x16_t a, int8x16_t b), int16_t vaddlv_s8(int8x8_t a) << ????
@@ -80,10 +123,10 @@ f3[ ] 2, f64, f16しかない
 - [ ] Vector rounding shift right: int8x8_t vrshr_n_s8(int8x8_t a, const int n)
 - [ ] Vector shift right and accumulate: int8x8_t vsra_n_s8(int8x8_t a, int8x8_t b, const int n)
 - [ ] Vector rounding shift right and accumulate: int8x8_t vrsra_n_s8(int8x8_t a, int8x8_t b, const int n)
-- [ ] Vector signed-&gt;unsigned saturating shift left: uint8x8_t vqshlu_n_s8(int8x8_t a, const int n)
+- [ ] Vector signed->unsigned saturating shift left: uint8x8_t vqshlu_n_s8(int8x8_t a, const int n)
 - [ ] Vector narrowing saturating shift right: int8x8_t vshrn_n_s16(int16x8_t a, const int n), int8x16_t vshrn_high_n_s16(int8x8_t r, int16x8_t a, const int n)
-- [ ] Vector signed-&gt;unsigned narrowing saturating shift right by constant: uint8x8_t vqshrun_n_s16(int16x8_t a, const int n)
-- [ ] Vector signed-&gt;unsigned rounding narrowing saturating shift right by constant: uint8x8_t vqrshrun_n_s16(int16x8_t a, const int n)
+- [ ] Vector signed->unsigned narrowing saturating shift right by constant: uint8x8_t vqshrun_n_s16(int16x8_t a, const int n)
+- [ ] Vector signed->unsigned rounding narrowing saturating shift right by constant: uint8x8_t vqrshrun_n_s16(int16x8_t a, const int n)
 - [ ] Vector rounding narrowing shift right: int8x8_t vrshrn_n_s16(int16x8_t a, const int n)
 - [ ] Vector rounding narrowing saturating shift right: int8x8_t vqrshrn_n_s16(int16x8_t a, const int n)
 - [ ] Vector widening shift left: int16x8_t vshll_n_s8(int8x8_t a, const int n)
