@@ -9,32 +9,29 @@ int8x8_t, int16x4_t, int32x2_t, int64x1_t, uint8x8_t, uint16x4_t, uint32x2_t, ui
 - 128bit : 
 int8x16_t, int16x8_t, int32x4_t, int64x2_t, uint8x16_t, uint16x8_t, uint32x4_t, uint64x2_t, float32x4_t, float64x2_t, float16x8_t
 
-## functions
-### 四則演算
-`v<前オプション><演算名><後オプション>_<データタイプ>`が基本的な関数。
+# 関数規則
+`v<prefix><関数名><suffix>_<データタイプ>`が基本的な関数。
 
-`v<前オプション><演算名><後オプション>_n_<データタイプ>`は引数にスカラ値がある場合使われる
+`v<prefix><関数名><suffix>_n_<データタイプ>`は引数にスカラ値がある場合使われる
 
-`v<前オプション><演算名><後オプション>_lane_<データタイプ>`が引数に要素インデクスが指定できる場合に使われる
+`v<prefix><関数名><suffix>_lane_<データタイプ>`が引数に要素インデクスが指定できる場合に使われる
 
 
-- 演算は
-  - `add` : 
-  - `sub` : 
-  - `mul` : 
+- 関数名は
+  - `add`, `sub`, `mul`, `div` : 四則演算
   - `mla` : 
   - `mls` : 
   - `fma` : 
   - `fms` : 
-  - `c**`, `ca**` : `eq`, `ge`, `le`, `gt`, `lt`. `ca`の場合は絶対値比較
-  - `tst` : 
-  - `abd` : 
-  - `aba` : 
+  - `c**`, `ca**` : `**`の部分は{`eq`: `=`, `ge`: `>=`, `le`: `<=`, `gt`: `>`, `lt`: `<`}. `ca`の場合は絶対値比較
+  - `tst` : test bits
+  - `abd` : Absolute difference
+  - `aba` : Absolute difference and accumulate
   - `min` / `max` : 
   - `shl` / `shr` : 
   - `sli` / `sri` : 
   - `cvt` : 
-  - `rnd` : 
+  - `rnd` : round
   - `mov` : 
   - `abs` : 
   - `neg` : 
@@ -52,14 +49,14 @@ int8x16_t, int16x8_t, int32x4_t, int64x2_t, uint8x16_t, uint16x8_t, uint32x4_t, 
   - `get` / `set` : 
   - `reinterpret` : 
   - `dot` : 
-- 前オプションは
+- `prefix`は
   - `h` : 演算結果を２で割るまで一気にやる
   - `rh` : 演算結果を２で割り、結果をroundするまで一気にやる
   - `q` : 演算結果をデータタイプで丸める
   - `r` : 結果を丸める
   - `d` : doubling
   - `p` : pairwise
-- 後オプションは
+- `suffix`は
   - `l` : 演算結果のbit数が増えるパターン
   - `w` : bit数が多いものとの演算
   - `hn` : 上位ビットのみ演算対象にする？
@@ -68,6 +65,7 @@ int8x16_t, int16x8_t, int32x4_t, int64x2_t, uint8x16_t, uint16x8_t, uint32x4_t, 
   - `n` : 演算結果のbit数が減るパターン
   - `v` : across vector
 
+# 関数
 - [ ] int8x8_t vadd_s8(int8x8_t a, int8x8_t b)
 - [ ] int16x8_t vaddl_s8(int8x8_t a, int8x8_t b), int16x8_t vaddl_high_s8(int8x16_t a, int8x16_t b), int16_t vaddlv_s8(int8x8_t a) << ????
 - [ ] int16x8_t vaddw_s8(int16x8_t a, int8x8_t b)
