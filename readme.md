@@ -32,7 +32,6 @@ int8x16_t, int16x8_t, int32x4_t, int64x2_t, uint8x16_t, uint16x8_t, uint32x4_t, 
   - `sli` / `sri` : 
   - `cvt` : 
   - `rnd` : round
-  - `mov` : 
   - `abs` : 
   - `neg` : 
   - `cls` / `clz` / `cnt` : 
@@ -41,15 +40,21 @@ int8x16_t, int16x8_t, int32x4_t, int64x2_t, uint8x16_t, uint16x8_t, uint32x4_t, 
   - `mvn` : Bitwise not
   - `and`, `orr`, `eor` : 
   - `bic` : bit clear
-  - `rev` : 
-  - `ext` : 
-  - `zip` / `uzp` : 
-  - `trn` : 
   - `tbl` / `tbx` : 
-  - `reinterpret` : 
   - `dot` : 
-  - `ld*` / `st*` : neonレジスタとのデータコピー
-  - `get` / `set` : 特定の要素の取得/設定をポインタを使わずにできる, vget_{high, low}_**はlowがインデクスの小さい半分の要素、highはインデクスの大きい半分の要素の取得
+  - 型変換系
+    - `mov` : 
+    - `reinterpret` : 
+  - レジスタ書き込み、読み込み系
+    - `ld*` / `st*` : neonレジスタとのデータコピー, 2,3,4ではinterleavedに要素のロード・ストアが行われる
+    - `get` / `set` : 特定の要素の取得/設定をポインタを使わずにできる, vget_{high, low}_**はlowがインデクスの小さい半分の要素、highはインデクスの大きい半分の要素の取得
+    - `dup` : 全ベクタに固定の値の代入
+  - 配置換え系
+    - `ext` : 
+    - `zip` / `uzp` : 
+    - `trn` : 
+    - `rev` : 
+
 
 - `prefix`は
   - `h` : 演算結果を２で割るまで一気にやる
@@ -66,7 +71,9 @@ int8x16_t, int16x8_t, int32x4_t, int64x2_t, uint8x16_t, uint16x8_t, uint32x4_t, 
   - `x` : extended??
   - `u` : signed -> unsigned
   - `n` : 演算結果のbit数が減るパターン
-  - `v` : across vector
+  - `v` : across vector, reduce. aarch64のときのみ。全要素の足し算とか。
+  - `e` : Reciprocalステップ
+  - `s` : 
 
 # 関数
 - [ ] int8x8_t vadd_s8(int8x8_t a, int8x8_t b)
@@ -193,7 +200,7 @@ f3[ ] 2, f64, f16しかない
 - [ ] Long pairwise add and accumulate: int16x4_t vpadal_s8(int16x4_t a, int8x8_t b)
 - [ ] Folding maximum of adjacent pairs: int8x8_t vpmax_s8(int8x8_t a, int8x8_t b)
 - [ ] Folding minimum of adjacent pairs: int8x8_t vpmin_s8(int8x8_t a, int8x8_t b)
-- [ ] Add across vector: int8_t vaddv_s8(int8x8_t a)
+- [x] Add across vector: int8_t vaddv_s8(int8x8_t a)
 - [ ] Reverse vector elements (swap endianness): int8x8_t vrev64_s8(int8x8_t vec)
 - [ ] Zip vectors: int8x8_t vzip1_s8(int8x8_t a, int8x8_t b)
 - [ ] Unzip vectors: int8x8_t vuzp1_s8(int8x8_t a, int8x8_t b)
