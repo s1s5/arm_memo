@@ -41,14 +41,16 @@ int8x16_t, int16x8_t, int32x4_t, int64x2_t, uint8x16_t, uint16x8_t, uint32x4_t, 
   - `mvn` : Bitwise not
   - `and`, `orr`, `eor` : 
   - `bic` : bit clear
-  - `vl*` / `st*` : 
   - `rev` : 
+  - `ext` : 
   - `zip` / `uzp` : 
   - `trn` : 
   - `tbl` / `tbx` : 
-  - `get` / `set` : 
   - `reinterpret` : 
   - `dot` : 
+  - `ld*` / `st*` : neonレジスタとのデータコピー
+  - `get` / `set` : 特定の要素の取得/設定をポインタを使わずにできる, vget_{high, low}_**はlowがインデクスの小さい半分の要素、highはインデクスの大きい半分の要素の取得
+
 - `prefix`は
   - `h` : 演算結果を２で割るまで一気にやる
   - `rh` : 演算結果を２で割り、結果をroundするまで一気にやる
@@ -56,6 +58,7 @@ int8x16_t, int16x8_t, int32x4_t, int64x2_t, uint8x16_t, uint16x8_t, uint32x4_t, 
   - `r` : 結果を丸める
   - `d` : doubling
   - `p` : pairwise
+
 - `suffix`は
   - `l` : 演算結果のbit数が増えるパターン
   - `w` : bit数が多いものとの演算
@@ -175,15 +178,16 @@ f3[ ] 2, f64, f16しかない
 - [ ] Vector duplicate: int8x8_t vdup_n_s8(int8_t value)
 - [ ] Vector move: int8x8_t vmov_n_s8(int8_t value)
 - [ ] Vector combine: int8x16_t vcombine_s8(int8x8_t low, int8x8_t high)
-- [ ] Vector extract: int8x8_t vget_high_s8(int8x16_t a)
-- [ ] Vector load: int8x8_t vld1_s8(int8_t const * ptr), int8x8_t vld1_lane_s8(int8_t const * ptr, int8x8_t src, const int lane), int8x8_t vld1_dup_s8(int8_t const * ptr)
-- [ ] Vector store: void vst1_s8(int8_t * ptr, int8x8_t val), void vst1_lane_s8(int8_t * ptr, int8x8_t val, const int lane), 
-- [ ] 2-element vector load: int8x8x2_t vld2_s8(int8_t const * ptr)
-- [ ] 3-element vector load: int8x8x3_t vld3_s8(int8_t const * ptr)
-- [ ] 4-element vector load: int8x8x4_t vld4_s8(int8_t const * ptr)
-- [ ] 2-element vector store: void vst2_s8(int8_t * ptr, int8x8x2_t val)
-- [ ] 3-element vector store: void vst3_s8(int8_t * ptr, int8x8x3_t val)
-- [ ] 4-element vector store: void vst4_s8(int8_t * ptr, int8x8x4_t val)
+- [x] Vector extract: int8x8_t vget_high_s8(int8x16_t a)
+- [ ] Vector extract: int8x8_t vext_s8(int8x8_t a, int8x8_t b, const int n)
+- [x] Vector load: int8x8_t vld1_s8(int8_t const * ptr), int8x8_t vld1_lane_s8(int8_t const * ptr, int8x8_t src, const int lane), int8x8_t vld1_dup_s8(int8_t const * ptr)
+- [x] Vector store: void vst1_s8(int8_t * ptr, int8x8_t val), void vst1_lane_s8(int8_t * ptr, int8x8_t val, const int lane), 
+- [x] 2-element vector load: int8x8x2_t vld2_s8(int8_t const * ptr)
+- [x] 3-element vector load: int8x8x3_t vld3_s8(int8_t const * ptr)
+- [x] 4-element vector load: int8x8x4_t vld4_s8(int8_t const * ptr)
+- [x] 2-element vector store: void vst2_s8(int8_t * ptr, int8x8x2_t val)
+- [x] 3-element vector store: void vst3_s8(int8_t * ptr, int8x8x3_t val)
+- [x] 4-element vector store: void vst4_s8(int8_t * ptr, int8x8x4_t val)
 - [ ] Pairwise add: int8x8_t vpadd_s8(int8x8_t a, int8x8_t b)
 - [ ] Long pairwise add: int16x4_t vpaddl_s8(int8x8_t a)
 - [ ] Long pairwise add and accumulate: int16x4_t vpadal_s8(int16x4_t a, int8x8_t b)
@@ -196,8 +200,8 @@ f3[ ] 2, f64, f16しかない
 - [ ] Transpose elements: int8x8_t vtrn1_s8(int8x8_t a, int8x8_t b)
 - [ ] Table look-up: int8x8_t vtbl1_s8(int8x8_t a, int8x8_t b)
 - [ ] Extended table look-up: int8x8_t vtbx1_s8(int8x8_t a, int8x8_t b, int8x8_t c)
-- [ ] Extract lanes from a vector: uint8_t vget_lane_u8(uint8x8_t v, const int lane)
-- [ ] Set lanes within a vector: uint8x8_t vset_lane_u8(uint8_t a, uint8x8_t v, const int lane)
+- [x] Extract lanes from a vector: uint8_t vget_lane_u8(uint8x8_t v, const int lane)
+- [x] Set lanes within a vector: uint8x8_t vset_lane_u8(uint8_t a, uint8x8_t v, const int lane)
 - [ ] Vector reinterpret cast operations: int16x4_t vreinterpret_s16_s8(int8x8_t a)
 - [ ] AES cryptography: uint8x16_t vaeseq_u8(uint8x16_t data, uint8x16_t key)
 - [ ] SHA1 cryptography: uint32x4_t vsha1cq_u32(uint32x4_t hash_abcd, uint32_t hash_e, uint32x4_t wk)
@@ -212,3 +216,10 @@ f3[ ] 2, f64, f16しかない
 
 
 - [intrinsics](/intrinsics.md)
+
+# サンプル
+
+``` shell
+$ cmake -G Ninja -DCMAKE_TOOLCHAIN_FILE=../../work/sizebook/engine/cmake/toolchain-rpi.cmake <project_dir>
+```
+
