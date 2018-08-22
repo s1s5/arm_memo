@@ -19,7 +19,6 @@ int main(int argc, char **argv) {
 
     for (int try_cnt = 0; try_cnt < 3; try_cnt++) {
         // d2 = vmulq_f32(d0, v);
-        e = vmulq_f32(e, vrecpsq_f32(v, e));
 
         // d0 = vrsqrtsq_f32(d0, v);
         vst1q_f32(test, e);
@@ -27,6 +26,8 @@ int main(int argc, char **argv) {
             printf("%f(%f, %e), ", test[i], 1.0 / (value[i]), test[i] - 1.0 / (value[i]));
         }
         printf("\n");
+
+        e = vmulq_f32(e, vrecpsq_f32(v, e));
     }
 
 }

@@ -18,29 +18,41 @@ int main(int argc, char **argv) {
     // "vrsqrts.f32         d3, d2, d0\n\t"   // d3 = (3 - d0 * d2) / 2
     // "vmul.f32 d0, d0, d3\n\t"              // d0 = d0 * d3
 
-    float value[4] = {2.0f, 3.0f, 4.0f, 5.0f}, test[4];
-    float32x4_t v = vld1q_f32(value);
-    float32x4_t d0 = vrsqrteq_f32(v), d2, d3;
-
-    // vst1q_f32(test, d0);
-    // for (int i = 0; i < 4; i++) {
-    //     printf("%f(%f, %e), ", test[i], 1.0 / sqrt(value[i]), test[i] - 1.0 / sqrt(value[i]));
-    // }
-    // printf("\n");
-
-    for (int try_cnt = 0; try_cnt < 5; try_cnt++) {
-        // d2 = vmulq_f32(d0, v);
-        // d3 = vrsqrtsq_f32(d0, d2);
-        // d0 = vmulq_f32(d0, d3);
-
-        d0 = vmulq_f32(d0, vrsqrtsq_f32(d0, vmulq_f32(d0, v)));
-
-
-        vst1q_f32(test, d0);
+    {
+        float value[4] = {2.0f, 3.0f, 4.0f, 5.0f}, test[4];
+        float32x4_t v = vld1q_f32(value);
+        float32x4_t d0 = vrsqrteq_f32(v), d2, d3;
+        
+        // vst1q_f32(test, d0);
+        // for (int i = 0; i < 4; i++) {
+        //     printf("%f(%f, %e), ", test[i], 1.0 / sqrt(value[i]), test[i] - 1.0 / sqrt(value[i]));
+        // }
+        // printf("\n");
+        
+        for (int try_cnt = 0; try_cnt < 5; try_cnt++) {
+            vst1q_f32(test, d0);
+            for (int i = 0; i < 4; i++) {
+                printf("%f(%f, %e), ", test[i], 1.0 / sqrt(value[i]), test[i] - 1.0 / sqrt(value[i]));
+            }
+            printf("\n");
+            
+            // d2 = vmulq_f32(d0, v);
+            // d3 = vrsqrtsq_f32(d0, d2);
+            // d0 = vmulq_f32(d0, d3);
+            d0 = vmulq_f32(d0, vrsqrtsq_f32(d0, vmulq_f32(d0, v)));
+        }
+    }
+    
+    {
+        // ?????
+        uint32_t value[4] = {2, 3, 4, 5}, test[4];
+        uint32x4_t v = vld1q_u32(value);
+        uint32x4_t e = vrsqrteq_u32(v);
+        
+        vst1q_u32(test, e);
         for (int i = 0; i < 4; i++) {
-            printf("%f(%f, %e), ", test[i], 1.0 / sqrt(value[i]), test[i] - 1.0 / sqrt(value[i]));
+            printf("%u(%f, %e), ", test[i], 1.0 / sqrt(value[i]), test[i] - 1.0 / sqrt(value[i]));
         }
         printf("\n");
     }
-
 }

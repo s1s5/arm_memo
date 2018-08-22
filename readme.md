@@ -30,7 +30,6 @@ int8x16_t, int16x8_t, int32x4_t, int64x2_t, uint8x16_t, uint16x8_t, uint32x4_t, 
   - `min` / `max` : 
   - `shl` / `shr` : 
   - `sli` / `sri` : 
-  - `cvt` : 
   - `rnd` : round
   - `abs` : 
   - `neg` : 
@@ -43,17 +42,20 @@ int8x16_t, int16x8_t, int32x4_t, int64x2_t, uint8x16_t, uint16x8_t, uint32x4_t, 
   - `tbl` / `tbx` : 
   - `dot` : 
   - 型変換系
+    - `cvt` : 
     - `mov` : 
     - `reinterpret` : 
   - レジスタ書き込み、読み込み系
     - `ld*` / `st*` : neonレジスタとのデータコピー, 2,3,4ではinterleavedに要素のロード・ストアが行われる
-    - `get` / `set` : 特定の要素の取得/設定をポインタを使わずにできる, vget_{high, low}_**はlowがインデクスの小さい半分の要素、highはインデクスの大きい半分の要素の取得
+    - `get` / `set` : 特定の要素の取得/設定をポインタを使わずにできる
     - `dup` : 全ベクタに固定の値の代入
   - 配置換え系
     - `ext` : 
     - `zip` / `uzp` : 
     - `trn` : 
     - `rev` : 
+    - `get` / `set` : vget_{high, low}_**はlowがインデクスの小さい半分の要素、highはインデクスの大きい半分の要素の取得
+    - `combine` : ２つのint8x8_tとかを統合してint8x16_tにする
 
 
 - `prefix`は
@@ -63,6 +65,8 @@ int8x16_t, int16x8_t, int32x4_t, int64x2_t, uint8x16_t, uint16x8_t, uint32x4_t, 
   - `r` : 結果を丸める
   - `d` : doubling
   - `p` : pairwise
+  - `u` : 
+  - `s` : 
 
 - `suffix`は
   - `l` : 演算結果のbit数が増えるパターン
@@ -72,8 +76,8 @@ int8x16_t, int16x8_t, int32x4_t, int64x2_t, uint8x16_t, uint16x8_t, uint32x4_t, 
   - `u` : signed -> unsigned
   - `n` : 演算結果のbit数が減るパターン
   - `v` : across vector, reduce. aarch64のときのみ。全要素の足し算とか。
-  - `e` : Reciprocalステップ
-  - `s` : 
+  - `e` : Reciprocalステップの一番最初
+  - `s` : Reciprocalステップ
 
 # 関数
 - [ ] int8x8_t vadd_s8(int8x8_t a, int8x8_t b)
@@ -167,11 +171,11 @@ f3[ ] 2, f64, f16しかない
 - [ ] Count leading sign bits: int8x8_t vcls_s8(int8x8_t a)
 - [ ] Count leading zeros: int8x8_t vclz_s8(int8x8_t a)
 - [ ] Count number of set bits: int8x8_t vcnt_s8(int8x8_t a)
-- [ ] Reciprocal estimate: uint32x2_t vrecpe_u32(uint32x2_t a)
-- [ ] Reciprocal estimate/step and 1/sqrt estimate/step: float32x2_t vrecps_f32(float32x2_t a, float32x2_t b)
+- [x] Reciprocal estimate: uint32x2_t vrecpe_u32(uint32x2_t a)
+- [x] Reciprocal estimate/step and 1/sqrt estimate/step: float32x2_t vrecps_f32(float32x2_t a, float32x2_t b)
 - [ ] Vector square root: float32x2_t vsqrt_f32(float32x2_t a)
-- [ ] Reciprocal square root estimate: uint32x2_t vrsqrte_u32(uint32x2_t a)
-- [ ] Reciprocal square root step: float32x2_t vrsqrts_f32(float32x2_t a, float32x2_t b)
+- [x] Reciprocal square root estimate: uint32x2_t vrsqrte_u32(uint32x2_t a)
+- [x] Reciprocal square root step: float32x2_t vrsqrts_f32(float32x2_t a, float32x2_t b)
 - [ ] Bitwise not: int8x8_t vmvn_s8(int8x8_t a)
 - [ ] Bitwise and: int8x8_t vand_s8(int8x8_t a, int8x8_t b)
 - [ ] Bitwise or: int8x8_t vorr_s8(int8x8_t a, int8x8_t b)
