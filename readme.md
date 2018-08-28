@@ -23,24 +23,27 @@ int8x16_t, int16x8_t, int32x4_t, int64x2_t, uint8x16_t, uint16x8_t, uint32x4_t, 
   - `mls` : 
   - `fma` : 
   - `fms` : 
-  - `c**`, `ca**` : `**`の部分は{`eq`: `=`, `ge`: `>=`, `le`: `<=`, `gt`: `>`, `lt`: `<`}. `ca`の場合は絶対値比較
-  - `tst` : test bits
   - `abd` : Absolute difference
   - `aba` : Absolute difference and accumulate
-  - `min` / `max` : 
-  - `shl` / `shr` : 
-  - `sli` / `sri` : 
   - `rnd` : round
   - `abs` : 
   - `neg` : 
-  - `cls` / `clz` / `cnt` : 
-  - `recpe` / `recps` / `rsqrte` / `rsqrts` : 
+  - `recpe` / `recps` / `rsqrte` / `rsqrts` : reciprocal_inv.cpp, reciprocal_square.cpp参照
   - `sqrt` : 
-  - `mvn` : Bitwise not
-  - `and`, `orr`, `eor` : 
-  - `bic` : bit clear
-  - `tbl` / `tbx` : 
   - `dot` : 
+  - 比較系
+    - `min` / `max` : 
+    - `c**`, `ca**` : `**`の部分は{`eq`: `=`, `ge`: `>=`, `le`: `<=`, `gt`: `>`, `lt`: `<`}. `ca`の場合は絶対値比較
+  - 特殊
+    - `tbl` / `tbx` : 
+  - ビット演算系
+    - `shl` / `shr` : 
+    - `sli` / `sri` : 
+    - `tst` : test bits
+    - `and`, `orr`, `eor` : 
+    - `mvn` : Bitwise not
+    - `bic` : bit clear
+    - `cls` / `clz` / `cnt` : 
   - 型変換系
     - `cvt` : 
     - `mov` : 
@@ -51,7 +54,7 @@ int8x16_t, int16x8_t, int32x4_t, int64x2_t, uint8x16_t, uint16x8_t, uint32x4_t, 
     - `dup` : 全ベクタに固定の値の代入
   - 配置換え系
     - `ext` : 
-    - `zip` / `uzp` : 
+    - `zip` / `uzp` : layout.cpp参照
     - `trn` : 
     - `rev` : 
     - `get` / `set` : vget_{high, low}_**はlowがインデクスの小さい半分の要素、highはインデクスの大きい半分の要素の取得
