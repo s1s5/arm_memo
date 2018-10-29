@@ -1,5 +1,7 @@
 add_executable(load_store load_store.cpp)
+add_executable(arithmetic arithmetic.cpp)
 add_executable(suffix suffix.cpp)
 add_executable(layout layout.cpp)
+add_executable(compare compare.cpp)
 add_executable(reciprocal_inv reciprocal_inv.cpp)
 add_executable(reciprocal_square reciprocal_square.cpp)
