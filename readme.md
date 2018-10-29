@@ -19,8 +19,8 @@ int8x16_t, int16x8_t, int32x4_t, int64x2_t, uint8x16_t, uint16x8_t, uint32x4_t, 
 
 - 関数名は
   - `add`, `sub`, `mul`, `div` : 四則演算
-  - `mla` : 
-  - `mls` : 
+  - `mla` : arg0 + arg1 * arg2
+  - `mls` : arg0 - arg1 * arg2
   - `fma` : 
   - `fms` : 
   - `abd` : Absolute difference
@@ -45,9 +45,9 @@ int8x16_t, int16x8_t, int32x4_t, int64x2_t, uint8x16_t, uint16x8_t, uint32x4_t, 
     - `bic` : bit clear
     - `cls` / `clz` / `cnt` : 
   - 型変換系
-    - `cvt` : 
-    - `mov` : 
-    - `reinterpret` : 
+    - `cvt` : int -> floatとかの型変換
+    - `mov` : int8x8 -> int16x8とかのデータのbit数を変換
+    - `reinterpret` : 単なるcast
   - レジスタ書き込み、読み込み系
     - `ld*` / `st*` : neonレジスタとのデータコピー, 2,3,4ではinterleavedに要素のロード・ストアが行われる
     - `get` / `set` : 特定の要素の取得/設定をポインタを使わずにできる
@@ -67,7 +67,7 @@ int8x16_t, int16x8_t, int32x4_t, int64x2_t, uint8x16_t, uint16x8_t, uint32x4_t, 
   - `q` : 演算結果をデータタイプで丸める
   - `r` : 結果を丸める
   - `d` : doubling
-  - `p` : pairwise
+  - `p` : pairwise, 隣接する要素と足し合わせる
   - `u` : 
   - `s` : 
 
@@ -93,8 +93,7 @@ int8x16_t, int16x8_t, int32x4_t, int64x2_t, uint8x16_t, uint16x8_t, uint32x4_t, 
 - [ ] Vector rounding add high half: int8x8_t vraddhn_s16(int16x8_t a, int16x8_t b)
 - [ ] Vector multiply: int8x8_t vmul_s8(int8x8_t a, int8x8_t b), int16x4_t vmul_lane_s16(int16x4_t a, int16x4_t v, const int lane)
 - [ ] Vector multiply extended: float32x2_t vmulx_f32(float32x2_t a, float32x2_t b), float32x2_t vmulx_lane_f32(float32x2_t a, float32x2_t v, const int lane)
-- [ ] Vector divide: float32x2_t vdiv_f32(float32x2_t a, float32x2_t b)
-f3[ ] 2, f64, f16しかない
+- [ ] Vector divide: float32x2_t vdiv_f32(float32x2_t a, float32x2_t b) f32, f64, f16しかない
 - [ ] Vector multiply accumulate: int8x8_t vmla_s8(int8x8_t a, int8x8_t b, int8x8_t c)
 - [ ] Vector multiply accumulate long: int16x8_t vmlal_s8(int16x8_t a, int8x8_t b, int8x8_t c)
 - [ ] Vector multiply subtract: int8x8_t vmls_s8(int8x8_t a, int8x8_t b, int8x8_t c)
@@ -202,9 +201,9 @@ f3[ ] 2, f64, f16しかない
 - [x] 2-element vector store: void vst2_s8(int8_t * ptr, int8x8x2_t val)
 - [x] 3-element vector store: void vst3_s8(int8_t * ptr, int8x8x3_t val)
 - [x] 4-element vector store: void vst4_s8(int8_t * ptr, int8x8x4_t val)
-- [ ] Pairwise add: int8x8_t vpadd_s8(int8x8_t a, int8x8_t b)
-- [ ] Long pairwise add: int16x4_t vpaddl_s8(int8x8_t a)
-- [ ] Long pairwise add and accumulate: int16x4_t vpadal_s8(int16x4_t a, int8x8_t b)
+- [x] Pairwise add: int8x8_t vpadd_s8(int8x8_t a, int8x8_t b)
+- [x] Long pairwise add: int16x4_t vpaddl_s8(int8x8_t a)
+- [x] Long pairwise add and accumulate: int16x4_t vpadal_s8(int16x4_t a, int8x8_t b)
 - [ ] Folding maximum of adjacent pairs: int8x8_t vpmax_s8(int8x8_t a, int8x8_t b)
 - [ ] Folding minimum of adjacent pairs: int8x8_t vpmin_s8(int8x8_t a, int8x8_t b)
 - [x] Add across vector: int8_t vaddv_s8(int8x8_t a)
